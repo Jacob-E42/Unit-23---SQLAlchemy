@@ -1,6 +1,9 @@
 """Models for Blogly."""
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import func
+from datetime import datetime
+
 
 db = SQLAlchemy()
 
@@ -20,6 +23,8 @@ class User(db.Model):
     last_name = db.Column(db.Text, nullable=False)
     image_url = db.Column(db.String, default= "https://icon-library.com/images/generic-user-icon/generic-user-icon-19.jpg")
 
+    posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
+
     def __repr__(self):
         u = self
         return f"user {u.id} {u.first_name} {u.last_name} "
@@ -38,3 +43,38 @@ class User(db.Model):
 
         return cls.query.filter_by(id=f"{id}").first()
     
+     
+
+
+class Post(db.Model):
+
+    __tablename__ = "posts"
+
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default= datetime.now())
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"),  nullable=False)
+
+    
+
+    def __repr__(self):
+        p = self
+        return f"user {p.id} {p.title} {p.content} {p.created_at} "
+
+    @classmethod
+    def get_posts_by_user(cls, id):
+        posts = cls.query.filter_by(user_id=id)
+        return posts
+    
+    @classmethod
+    def get_post_by_id(cls, id):
+        post = cls.query.filter_by(id=id).first()
+        return post
+    
+    def modify_post(self, title=None, content=""):
+        if (title):
+            self.title = title
+        self.content = content
+        return self
