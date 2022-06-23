@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!-- saved from url=(0104)https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Blogly</title>
+
+    <link rel="stylesheet" href="./Blogly instructions, Part 2_files/pygments.css" type="text/css">
+    <link rel="stylesheet" href="./Blogly instructions, Part 2_files/handouts-sphinx.css">
+
+    
+    <link href="./Blogly instructions, Part 2_files/css" rel="stylesheet" type="text/css">
+    
+</head>
+<body>
+<div id="page-wrapper">
+    <div id="page-sidebar">
+        <header>
+            <p class="project">Springboard</p>
+
+            <p class="title">Blogly</p>
+
+            <p class="backlink"><a href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html"> « Back to Homepage</a></p>
+
+        </header>
+        <div id="toc">
+            <ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#">Blogly</a><ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#part-two-adding-posts">Part Two: Adding Posts</a><ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#post-model">Post Model</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#user-interface">User Interface</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#add-post-routes">Add Post Routes</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#change-the-user-page">Change the User Page</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#testing">Testing</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#celebrate">Celebrate!</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#parts-two-further-study">Parts Two Further Study</a><ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#make-a-homepage">Make a Homepage</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#show-friendly-date">Show Friendly Date</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#using-flash-messages-for-notifications">Using Flash Messages for Notifications</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#add-a-custom-404-error-page">Add a Custom “404 Error Page”</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#cascade-deletion-of-user">Cascade Deletion of User</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#part-three">Part Three</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/two.html#solution">Solution</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+    <div id="page-content">
+        
+  <div class="section" id="blogly">
+<h1>Blogly</h1>
+<div class="section" id="part-two-adding-posts">
+<h2>Part Two: Adding Posts</h2>
+<p>In this part, we’ll add functionality for blog posts using the
+one-to-many features of SQLAlchemy.</p>
+<div class="section" id="post-model">
+<h3>Post Model</h3>
+<div class="graphviz">
+<img src="./Blogly instructions, Part 2_files/graphviz-c3cf20c3fc939353a086903b5bae39ed78830777.svg">
+</div>
+<p>Next, add another model, for blog posts (call it <cite>Post</cite>).</p>
+<p>Post should have an:</p>
+<ul class="simple">
+<li><cite>id</cite>, like for <cite>User</cite></li>
+<li><cite>title</cite></li>
+<li><cite>content</cite></li>
+<li><cite>created_at</cite> a date+time that should automatically default to the when the
+post is created</li>
+<li>a foreign key to the <cite>User</cite> table</li>
+</ul>
+</div>
+<div class="section" id="user-interface">
+<h3>User Interface</h3>
+<p>Here is what you should build:</p>
+<p><strong>Better User Detail</strong></p>
+<a class="reference internal image-reference" href="./Blogly instructions, Part 2_files/user-w-posts.png"><img alt="_images/user-w-posts.png" src="./Blogly instructions, Part 2_files/user-w-posts.png" style="width: 30em;"></a>
+<p><strong>New Post Form</strong></p>
+<a class="reference internal image-reference" href="./Blogly instructions, Part 2_files/add-post.png"><img alt="_images/add-post.png" src="./Blogly instructions, Part 2_files/add-post.png" style="width: 20em;"></a>
+<p><strong>Post Detail Page</strong></p>
+<a class="reference internal image-reference" href="./Blogly instructions, Part 2_files/detail-post.png"><img alt="_images/detail-post.png" src="./Blogly instructions, Part 2_files/detail-post.png" style="width: 25em;"></a>
+<p><strong>Post Edit Page</strong></p>
+<a class="reference internal image-reference" href="./Blogly instructions, Part 2_files/edit-post.png"><img alt="_images/edit-post.png" src="./Blogly instructions, Part 2_files/edit-post.png" style="width: 20em;"></a>
+</div>
+<div class="section" id="add-post-routes">
+<h3>Add Post Routes</h3>
+<dl class="docutils">
+<dt>GET <cite>/users/[user-id]/posts/new</cite></dt><dd>Show form to add a post for that user.</dd>
+<dt>POST <cite>/users/[user-id]/posts/new</cite></dt><dd>Handle add form; add post and redirect to the user detail page.</dd>
+<dt>GET <cite>/posts/[post-id]</cite></dt><dd><p>Show a post.</p>
+<p>Show buttons to edit and delete the post.</p>
+</dd>
+<dt>GET <cite>/posts/[post-id]/edit</cite></dt><dd>Show form to edit a post, and to cancel (back to user page).</dd>
+<dt>POST <cite>/posts/[post-id]/edit</cite></dt><dd>Handle editing of a post. Redirect back to the post view.</dd>
+<dt>POST <cite>/posts/[post-id]/delete</cite></dt><dd>Delete the post.</dd>
+</dl>
+</div>
+<div class="section" id="change-the-user-page">
+<h3>Change the User Page</h3>
+<p>Change the user page to show the posts for that user.</p>
+</div>
+<div class="section" id="testing">
+<h3>Testing</h3>
+<p>Update any broken tests and add more testing</p>
+</div>
+<div class="section" id="celebrate">
+<h3>Celebrate!</h3>
+<p>Yay! Congratulations on the first big two parts.</p>
+</div>
+</div>
+<div class="section" id="parts-two-further-study">
+<h2>Parts Two Further Study</h2>
+<p>There are several possible additional tasks here.</p>
+<div class="section" id="make-a-homepage">
+<h3>Make a Homepage</h3>
+<p>Change the homepage to a page that shows the 5 most recent posts.</p>
+<a class="reference internal image-reference" href="./Blogly instructions, Part 2_files/homepage.png"><img alt="_images/homepage.png" src="./Blogly instructions, Part 2_files/homepage.png" style="width: 25em;"></a>
+</div>
+<div class="section" id="show-friendly-date">
+<h3>Show Friendly Date</h3>
+<p>When listing the posts (on the post index page, the homepage, and the user
+detail page), show a friendly-looking version of the date, like
+“May 1, 2015, 10:30 AM”.</p>
+</div>
+<div class="section" id="using-flash-messages-for-notifications">
+<h3>Using Flash Messages for Notifications</h3>
+<p>Use the Flask “flash message” feature to notify about form errors/successful
+submissions.</p>
+</div>
+<div class="section" id="add-a-custom-404-error-page">
+<h3>Add a Custom “404 Error Page”</h3>
+<p>Research how to make a custom page that appears when a 404 error
+happens in Flask. Make such a page.</p>
+</div>
+<div class="section" id="cascade-deletion-of-user">
+<h3>Cascade Deletion of User</h3>
+<p>If you try to delete a user that has posts, you’ll get an <cite>IntegrityError</cite> —
+PostgreSQL raises an error because that would leave posts without a valid
+<cite>user_id</cite>.</p>
+<p>When a user is deleted, the related posts should be deleted, too.</p>
+<p>You can find help for this at <a class="reference external" href="https://docs.sqlalchemy.org/en/latest/orm/cascades.html">Cascades</a>&gt;`_</p>
+</div>
+</div>
+<div class="section" id="part-three">
+<h2>Part Three</h2>
+<p><a class="reference external" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html">Continue to Part Three</a></p>
+</div>
+<div class="section" id="solution">
+<h2>Solution</h2>
+<p><a class="reference external" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/solution/two.html">Our Solution for Part Two</a></p>
+</div>
+</div>
+
+
+
+    </div>
+</div>
+<script type="text/javascript" src="./Blogly instructions, Part 2_files/jquery.js.download"></script>
+<script type="text/javascript" src="./Blogly instructions, Part 2_files/underscore.js.download"></script>
+<script type="text/javascript" src="./Blogly instructions, Part 2_files/doctools.js.download"></script>
+<script type="text/javascript" src="./Blogly instructions, Part 2_files/language_data.js.download"></script> 
+
+</body></html>
