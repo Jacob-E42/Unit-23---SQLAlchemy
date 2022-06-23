@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!-- saved from url=(0106)https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Blogly</title>
+
+    <link rel="stylesheet" href="./Blogly Instructions Part 3_files/pygments.css" type="text/css">
+    <link rel="stylesheet" href="./Blogly Instructions Part 3_files/handouts-sphinx.css">
+
+    
+    <link href="./Blogly Instructions Part 3_files/css" rel="stylesheet" type="text/css">
+    
+</head>
+<body>
+<div id="page-wrapper">
+    <div id="page-sidebar">
+        <header>
+            <p class="project">Springboard</p>
+
+            <p class="title">Blogly</p>
+
+            <p class="backlink"><a href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html"> « Back to Homepage</a></p>
+
+        </header>
+        <div id="toc">
+            <ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#">Blogly</a><ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#part-three-add-m2m-relationship">Part Three: Add M2M Relationship</a><ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#tag-model">Tag Model</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#user-interface">User Interface</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#add-routes">Add Routes</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#update-routes-for-posts">Update Routes for Posts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#further-study">Further Study</a><ul>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#update-tag-add-edit-forms">Update Tag Add/Edit Forms</a></li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#add-tests">Add Tests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/three.html#solution">Solution</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+    </div>
+    <div id="page-content">
+        
+  <div class="section" id="blogly">
+<h1>Blogly</h1>
+<div class="section" id="part-three-add-m2m-relationship">
+<h2>Part Three: Add M2M Relationship</h2>
+<p>The last part will be to add a “tagging” feature.</p>
+<div class="section" id="tag-model">
+<h3>Tag Model</h3>
+<div class="graphviz">
+<img src="./Blogly Instructions Part 3_files/graphviz-3546dae0c389c1602edbe420a3d7d9411d59b1eb.svg">
+</div>
+<p>The site will have a table of tags — there should be an SQLAlchemy
+model for this:</p>
+<ul class="simple">
+<li><cite>id</cite></li>
+<li><cite>name</cite>, (unique!)</li>
+</ul>
+<p>There should also be a model for <cite>PostTag</cite>, which joins together
+a <cite>Post</cite> and a <cite>Tag</cite>. It will have foreign keys for the both the
+<cite>post_id</cite> and <cite>tag_id</cite>. Since we don’t want the same post to be tagged
+to the same tag more than once, we’ll want the combination of post + tag
+to be unique. It also makes sense that neither the <cite>post_id</cite> nor <cite>tag_id</cite>
+can be null. Therefore, we’ll use a “composite primary key” for this table—
+a primary key made of more than one field. You may have to do some research
+to learn how to do this in SQLAlchemy.</p>
+<p>Add relationships so you can see the <cite>.tags</cite> for a post, and the
+<cite>.posts</cite> for a tag.</p>
+<p><strong>STOP</strong> and play around with this feature in <cite>IPython</cite> before
+continuing.</p>
+</div>
+<div class="section" id="user-interface">
+<h3>User Interface</h3>
+<p><strong>Add Tag</strong></p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/add-tag.png"><img alt="_images/add-tag.png" src="./Blogly Instructions Part 3_files/add-tag.png" style="width: 25em;"></a>
+<p><strong>Edit Tag</strong></p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/edit-tag.png"><img alt="_images/edit-tag.png" src="./Blogly Instructions Part 3_files/edit-tag.png" style="width: 25em;"></a>
+<p><strong>List Tag</strong></p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/list-tags.png"><img alt="_images/list-tags.png" src="./Blogly Instructions Part 3_files/list-tags.png" style="width: 20em;"></a>
+<p><strong>Show Tag</strong></p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/show-tag.png"><img alt="_images/show-tag.png" src="./Blogly Instructions Part 3_files/show-tag.png" style="width: 20em;"></a>
+<p><strong>Show Post With Tags</strong></p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/post-w-tags.png"><img alt="_images/post-w-tags.png" src="./Blogly Instructions Part 3_files/post-w-tags.png" style="width: 20em;"></a>
+<p><strong>Add Post With Tags</strong></p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/add-post-w-tags.png"><img alt="_images/add-post-w-tags.png" src="./Blogly Instructions Part 3_files/add-post-w-tags.png" style="width: 25em;"></a>
+<p><strong>Edit Post With Tags</strong></p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/edit-post-w-tags.png"><img alt="_images/edit-post-w-tags.png" src="./Blogly Instructions Part 3_files/edit-post-w-tags.png" style="width: 25em;"></a>
+</div>
+<div class="section" id="add-routes">
+<h3>Add Routes</h3>
+<dl class="docutils">
+<dt>GET <cite>/tags</cite></dt><dd>Lists all tags, with links to the tag detail page.</dd>
+<dt>GET <cite>/tags/[tag-id]</cite></dt><dd>Show detail about a tag. Have links to edit form and to delete.</dd>
+<dt>GET <cite>/tags/new</cite></dt><dd>Shows a form to add a new tag.</dd>
+<dt>POST <cite>/tags/new</cite></dt><dd>Process add form, adds tag, and redirect to tag list.</dd>
+<dt>GET <cite>/tags/[tag-id]/edit</cite></dt><dd>Show edit form for a tag.</dd>
+<dt>POST <cite>/tags/[tag-id]/edit</cite></dt><dd>Process edit form, edit tag, and redirects to the tags list.</dd>
+<dt>POST <cite>/tags/[tag-id]/delete</cite></dt><dd>Delete a tag.</dd>
+</dl>
+</div>
+<div class="section" id="update-routes-for-posts">
+<h3>Update Routes for Posts</h3>
+<p>Update the route that shows a post so that it shows all the tags
+for that post.</p>
+<p>Update the routes for adding/editing posts so that it shows a listing
+of the tags and lets you pick which tag(s) apply to that post. (You
+can use whatever form element you want here: a multi-select, a list of
+checkboxes, or any other way you can solve this.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p>Getting Multiple Values From Form</p>
+<p class="last">The normal way to get a value from a form, <code class="docutils literal notranslate"><span class="pre">request.form['key']</span></code>,
+only returns <em>one</em> value from this form. To get all of the values
+for that key in the form, you’ll want to investigate <cite>.getlist</cite>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="further-study">
+<h2>Further Study</h2>
+<div class="section" id="update-tag-add-edit-forms">
+<h3>Update Tag Add/Edit Forms</h3>
+<p>Edit these forms to let you pick posts for this tag.</p>
+<p><strong>Edit Tag With Posts</strong></p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/add-tag-with-posts.png"><img alt="_images/add-tag-with-posts.png" src="./Blogly Instructions Part 3_files/add-tag-with-posts.png" style="width: 25em;"></a>
+<p><strong>Edit Tag With Posts</strong></p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/edit-tag-with-posts.png"><img alt="_images/edit-tag-with-posts.png" src="./Blogly Instructions Part 3_files/edit-tag-with-posts.png" style="width: 25em;"></a>
+<p>If you made a homepage, make this show tags, too:</p>
+<a class="reference internal image-reference" href="./Blogly Instructions Part 3_files/homepage-w-tags.png"><img alt="_images/homepage-w-tags.png" src="./Blogly Instructions Part 3_files/homepage-w-tags.png" style="width: 25em;"></a>
+</div>
+<div class="section" id="add-tests">
+<h3>Add Tests</h3>
+<p>Add tests for your most critical pages.</p>
+</div>
+</div>
+<div class="section" id="solution">
+<h2>Solution</h2>
+<p><a class="reference external" href="https://curric.springboard.com/software-engineering-career-track/default/exercises/flask-blogly/solution/three.html">Our Solution for Part Three</a></p>
+</div>
+</div>
+
+
+
+    </div>
+</div>
+<script type="text/javascript" src="./Blogly Instructions Part 3_files/jquery.js.download"></script>
+<script type="text/javascript" src="./Blogly Instructions Part 3_files/underscore.js.download"></script>
+<script type="text/javascript" src="./Blogly Instructions Part 3_files/doctools.js.download"></script>
+<script type="text/javascript" src="./Blogly Instructions Part 3_files/language_data.js.download"></script> 
+
+</body></html>
