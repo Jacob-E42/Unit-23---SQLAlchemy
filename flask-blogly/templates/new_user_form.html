@@ -8,6 +8,7 @@
         <label for="first">First Name<input type="text" id="first" name="first_name" placeholder="Enter a First Name" required></label><br>
         <label for="last">Last Name<input type="text" id="last" name="last_name" placeholder="Enter a Last Name" required></label><br>
         <label for="img">Image URL<input type="text" id="img" name="img" placeholder="Provide an image of this user"></label><br>
+        <button formaction="/users" formmethod="get" formnovalidate>Back</button>
         <button type="submit">Add</button>
     </form>
 {% endblock %}

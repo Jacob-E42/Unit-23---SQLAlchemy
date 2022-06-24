@@ -5,10 +5,22 @@
 <h1>{{post.title}}</h1>
 
 <section>{{post.content}}</section>
+
+{% if tags %}
+    <section>
+        <span>Tags: </span>
+        {% for tag in tags %}
+            <button><a href="/tags/{{tag.id}}">{{tag.name}}</a></button>
+        {%endfor%}
+    </section>
+{%endif%}
+
 <form >
-    <button formaction="/users/{{post.user_id}}" formmethod="get" type="submit">Cancel</button>
+    <button formaction="/users/{{post.user_id}}" formmethod="get" type="submit">Back</button>
     <button formaction="/posts/{{post.id}}/edit" formmethod="get" type="submit">Edit</button>
     <button formaction="/posts/{{post.id}}/delete" formmethod="post" type="submit">Delete</button>
+    <br>
+    <button formaction="/tags" formmethod="get">Show All Tags</button>
 
 </form>
         

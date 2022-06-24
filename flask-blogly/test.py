@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect, render_template, session, flash
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag, PostTag
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 from unittest import TestCase
@@ -22,8 +22,6 @@ db.create_all()
 class FlaskTests(TestCase):
 
     def setUp(self):
-        Post.query.delete()
-        User.query.delete()
         
         fred = User(id=17, first_name="Fred", last_name="Someone")
         db.session.add(fred)
@@ -33,10 +31,23 @@ class FlaskTests(TestCase):
         post1 = Post(id=1, title="today's weather", content="looking pretty sunny", user_id=17)
         db.session.add(post1)
         db.session.commit()
+
+        tag = Tag(name="Funny")
+        db.session.add(tag)
+        db.session.commit()
+
+        post1.tags.append(tag)
+        db.session.commit()
         
        
     def tearDown(self):
-        
+        user = db.session.query(User).first()
+        post  = db.session.query(Post).first()
+        tag = db.session.query(Tag).first()
+        db.session.delete(user)
+        db.session.delete(post)
+        db.session.delete(tag)
+        db.session.commit()
        
         db.session.rollback()
         

@@ -1,4 +1,4 @@
-from models import User, db, Post
+from models import User, db, Post, Tag
 from app import app
 
 
@@ -6,6 +6,8 @@ db.drop_all()
 db.create_all()
 
 User.query.delete()
+Post.query.delete()
+Tag.query.delete()
 
 
 emily = User(first_name="Emily", last_name="Blank")
@@ -27,5 +29,22 @@ post3 = Post(title="Biology", content="The immune system has a special organ tha
 db.session.add(post1)
 db.session.add(post2)
 db.session.add(post3)
+
+db.session.commit()
+
+tag1 = Tag(name="culture")
+tag2 = Tag(name="science")
+tag3 = Tag(name="politics")
+
+db.session.add(tag1)
+db.session.add(tag2)
+db.session.add(tag3)
+
+db.session.commit()
+
+post1.tags.append(tag1)
+post2.tags.append(tag3)
+post2.tags.append(tag1)
+post3.tags.append(tag2)
 
 db.session.commit()

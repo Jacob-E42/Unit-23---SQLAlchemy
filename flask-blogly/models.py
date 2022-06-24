@@ -58,6 +58,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"),  nullable=False)
 
     
+    
 
     def __repr__(self):
         p = self
@@ -78,3 +79,62 @@ class Post(db.Model):
             self.title = title
         self.content = content
         return self
+
+    def get_tags_by_post(self):
+        tags = self.tags
+        return tags
+
+class Tag(db.Model):
+
+    __tablename__ = "tags"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Text, nullable=False, unique=True)
+
+    posts = db.relationship(
+        'Post',
+        secondary="post_tags",
+        cascade="all,delete",
+        backref="tags",
+    )
+
+    def __repr__(self):
+        t = self
+        return f" {t.id} {t.name}"
+
+    @classmethod
+    def get_tag_by_id(cls, id):
+        id = int(id)
+        tag = cls.query.filter_by(id=id).first()
+        return tag
+
+    
+
+
+    @classmethod
+    def get_tags(cls):
+        tags = cls.query.all()
+        return tags
+
+    def get_associated_posts(self):
+        posts = self.posts 
+        return posts
+    def modify_tag(self, name):
+    
+        if (name is None):
+            return False
+        self.name = name
+        return self
+
+
+
+class PostTag(db.Model):
+
+    __tablename__ = "post_tags"
+
+    post_id = db.Column(db.Integer,db.ForeignKey("posts.id"), primary_key=True )
+    tag_id = db.Column(db.Integer, db.ForeignKey("tags.id"), primary_key=True )
+
+    # tags = db.relationship("Tag", backref="posts_tags")
+
+   

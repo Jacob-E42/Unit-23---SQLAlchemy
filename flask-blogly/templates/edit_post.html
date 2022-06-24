@@ -6,8 +6,16 @@
 
 <form action="/posts/{{post.id}}/edit" method="post">
     <label for="title">Title<input type="text" id="title" name="title"  value="{{post.title}}" ></label><br>
-    <label for="content">Content<textarea type="text" id="content" name="content" placeholder="Enter content" value="{{post.content}}" required></textarea></label><br>
+    <label for="content">Content<textarea type="text" id="content" name="content" placeholder="Enter content" value="{{post.content}}" required>{{post.content}}</textarea></label><br>
     
+    {%if tags%}
+        <section class="tag-checkboxes">
+            {%for tag in tags %}
+                <input type="checkbox" name="tags" value={{tag.id}} id="{{tag.name}}"><label for="{{tag.name}}">{{tag.name}}</label><br>
+            {%endfor%}
+        </section>
+    {%endif%}
+
     <button formaction="/posts/{{post.id}}" formmethod="get">Cancel</button>
     <button type="submit" >Save</button>
 </form>>
